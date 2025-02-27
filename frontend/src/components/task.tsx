@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "../static/app.module.css";
 import { taskObj } from "../App";
 
@@ -13,15 +13,21 @@ interface SingleTaskProps {
   ) => void;
 }
 
-export default function Task({
-  task,
-  removeTask,
-  changeStatus,
-  changeTaskTitle,
-  isCompleted,
-}: SingleTaskProps) {
+const Task: React.FC<SingleTaskProps> = (props) => {
+  const { task, removeTask, changeStatus, changeTaskTitle, isCompleted } =
+    props;
+
   // const [title, setTitle] = useState<string>(titleParam);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
+  const taskTitleRef = useRef<HTMLInputElement | null>(null);
+
+  function toggleTitle() {
+    setIsDisabled(!isDisabled);
+  }
+
+  useEffect(() => {
+    if (taskTitleRef.current && !isDisabled) taskTitleRef.current.focus();
+  }, [isDisabled]);
 
   return (
     <div
@@ -32,9 +38,10 @@ export default function Task({
         onChange={(e) => changeTaskTitle(e, task)}
         className={isCompleted ? styles.taskTitle : styles.taskTitleIncomplete}
         disabled={isDisabled}
+        ref={taskTitleRef}
       />
       <div className={styles.taskButtonsCon}>
-        <button onClick={(e) => setIsDisabled(!isDisabled)}>Edit</button>
+        <button onClick={toggleTitle}>Edit</button>
         <button onClick={removeTask}>Delete</button>
         <button onClick={changeStatus}>
           {isCompleted ? "Incomplete" : "Done"}
@@ -42,4 +49,6 @@ export default function Task({
       </div>
     </div>
   );
-}
+};
+
+export default Task;

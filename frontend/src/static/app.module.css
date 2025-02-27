@@ -18,6 +18,10 @@
   border: 1px solid #ccc; /* Optional: Add a border to the input */
 }
 
+.taskNameInput:focus {
+  outline: 2px solid #ccc;
+}
+
 .taskAddButton {
   background-color: rgb(240, 195, 113);
   padding: 16px;

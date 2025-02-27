@@ -8,16 +8,16 @@ export interface taskObj {
   isCompleted: boolean;
 }
 
-function App() {
+const App: React.FC = () => {
   const [currTitle, setCurrTitle] = useState<string>("");
   const [tasks, setTasks] = useState<taskObj[]>([
     {
-      title: "Temp Task 1",
+      title: "Incomplete Task Example",
       isCompleted: false,
       id: new Date().getTime(),
     },
     {
-      title: "Temp Task 2",
+      title: "Complete Task Example",
       isCompleted: true,
       id: new Date().getTime() + 1,
     },
@@ -131,6 +131,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;
